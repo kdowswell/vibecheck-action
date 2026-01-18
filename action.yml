@@ -70,6 +70,9 @@ runs:
         npm install -g @github/copilot@latest
         echo "Copilot CLI installed: $(copilot --version || echo 'version check failed')"
 
+    - name: Checkout target repository
+      uses: actions/checkout@v4
+
     - name: Checkout vibecheck action
       uses: actions/checkout@v4
       with:
@@ -85,8 +88,7 @@ runs:
     - name: Run Vibe Check
       id: vibecheck
       shell: bash
-      working-directory: .vibecheck-action
-      run: node dist/index.js
+      run: node .vibecheck-action/dist/index.js
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_TONE: ${{ inputs.tone }}

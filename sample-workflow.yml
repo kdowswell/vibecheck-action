@@ -36,7 +36,11 @@ jobs:
       issues: write
     
     steps:
-      # For testing: checkout the action from your fork/branch
+      # FIRST: Checkout the target repository (the one being reviewed)
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+
+      # SECOND: Checkout the action source to a subdirectory
       - name: Checkout action source
         uses: actions/checkout@v4
         with:
@@ -64,8 +68,7 @@ jobs:
         run: npm run build
 
       - name: Run Vibe Check
-        working-directory: .vibecheck-action
-        run: node dist/index.js
+        run: node .vibecheck-action/dist/index.js
         env:
           GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
           INPUT_TONE: playful
