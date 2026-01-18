@@ -1,0 +1,80 @@
+# Vibe Check - Sample Workflow
+# 
+# Copy this file to your repo at: .github/workflows/vibecheck.yml
+#
+# Before using, you need to:
+# 1. Create a GitHub PAT with "Copilot Requests" permission
+# 2. Add it as a secret named COPILOT_TOKEN in your repo settings
+#
+# For testing during development, you can point to a local/fork version
+# by changing the `uses` line.
+
+name: Vibe Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+  issue_comment:
+    types: [created]
+
+jobs:
+  vibecheck:
+    runs-on: ubuntu-latest
+    
+    # Run on:
+    # - All PR events
+    # - Issue comments that mention @vibecheck (only on PRs)
+    if: >
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' && 
+       github.event.issue.pull_request &&
+       contains(github.event.comment.body, '@vibecheck'))
+    
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    
+    steps:
+      # For testing: checkout the action from your fork/branch
+      - name: Checkout action source
+        uses: actions/checkout@v4
+        with:
+          repository: YOUR_USERNAME/vibecheck-action  # Change this!
+          ref: main  # Or your branch
+          path: .vibecheck-action
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Copilot CLI
+        run: |
+          echo "Installing GitHub Copilot CLI..."
+          npm install -g @github/copilot@latest
+          copilot --version || echo "Version check requires auth"
+
+      - name: Install action dependencies
+        working-directory: .vibecheck-action
+        run: npm ci
+
+      - name: Build action
+        working-directory: .vibecheck-action
+        run: npm run build
+
+      - name: Run Vibe Check
+        working-directory: .vibecheck-action
+        run: node dist/index.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+          INPUT_TONE: playful
+          INPUT_MODEL: gpt-5
+          INPUT_CHECKS: security,ai-detection,tests,complexity
+          INPUT_TRIGGER_PHRASE: "@vibecheck"
+          INPUT_AUTO_REVIEW: "true"
+          INPUT_SKIP_LABELS: "skip-vibecheck,wip,draft"
+          INPUT_MAX_FILES: "50"
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}

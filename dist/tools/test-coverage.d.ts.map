@@ -1,0 +1,1 @@
+{"version":3,"file":"test-coverage.d.ts","sourceRoot":"","sources":["../../src/tools/test-coverage.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,CAAC,EAAE,MAAM,KAAK,CAAC;AAGxB,eAAO,MAAM,kBAAkB;;;;;;;;;EAG7B,CAAC;AAEH,MAAM,MAAM,kBAAkB,GAAG,CAAC,CAAC,KAAK,CAAC,OAAO,kBAAkB,CAAC,CAAC;AAEpE,wBAAsB,mBAAmB,CAAC,MAAM,EAAE,kBAAkB,GAAG,OAAO,CAAC,MAAM,CAAC,CAoErF"}

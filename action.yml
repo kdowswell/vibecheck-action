@@ -1,0 +1,101 @@
+name: 'Vibe Check'
+description: 'PR review for vibe coders. Catches security issues, AI slop, and complexity - with personality.'
+author: 'Seam'
+
+branding:
+  icon: 'check-circle'
+  color: 'purple'
+
+inputs:
+  github_token:
+    description: 'GitHub token with Copilot access (needs "Copilot Requests" permission for PATs)'
+    required: true
+    default: ${{ github.token }}
+
+  tone:
+    description: 'Response tone: "playful" or "professional"'
+    required: false
+    default: 'playful'
+
+  model:
+    description: 'Copilot model to use (gpt-5, claude-sonnet-4.5, gpt-5.2-codex)'
+    required: false
+    default: 'gpt-5'
+
+  checks:
+    description: 'Comma-separated checks to run (security,ai-detection,tests,complexity)'
+    required: false
+    default: 'security,ai-detection,tests,complexity'
+
+  trigger_phrase:
+    description: 'Phrase to trigger interactive mode in comments'
+    required: false
+    default: '@vibecheck'
+
+  auto_review:
+    description: 'Automatically review new PRs'
+    required: false
+    default: 'true'
+
+  skip_labels:
+    description: 'Skip PRs with these labels (comma-separated)'
+    required: false
+    default: 'skip-vibecheck,wip,draft'
+
+  max_files:
+    description: 'Skip PRs with more than this many files'
+    required: false
+    default: '50'
+
+outputs:
+  vibe:
+    description: 'Overall vibe assessment'
+  ship_it:
+    description: 'Whether its safe to ship (yes/maybe/no)'
+  findings_count:
+    description: 'Number of findings'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Copilot CLI
+      shell: bash
+      run: |
+        echo "Installing GitHub Copilot CLI..."
+        npm install -g @github/copilot@latest
+        echo "Copilot CLI installed: $(copilot --version || echo 'version check failed')"
+
+    - name: Checkout vibecheck action
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ github.action_repository }}
+        ref: ${{ github.action_ref }}
+        path: .vibecheck-action
+
+    - name: Install action dependencies
+      shell: bash
+      working-directory: .vibecheck-action
+      run: npm ci
+
+    - name: Run Vibe Check
+      id: vibecheck
+      shell: bash
+      working-directory: .vibecheck-action
+      run: node dist/index.js
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_TONE: ${{ inputs.tone }}
+        INPUT_MODEL: ${{ inputs.model }}
+        INPUT_CHECKS: ${{ inputs.checks }}
+        INPUT_TRIGGER_PHRASE: ${{ inputs.trigger_phrase }}
+        INPUT_AUTO_REVIEW: ${{ inputs.auto_review }}
+        INPUT_SKIP_LABELS: ${{ inputs.skip_labels }}
+        INPUT_MAX_FILES: ${{ inputs.max_files }}
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_EVENT_NAME: ${{ github.event_name }}
