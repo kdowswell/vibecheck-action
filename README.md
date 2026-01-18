@@ -63,7 +63,7 @@ jobs:
       issues: write
     
     steps:
-      - uses: seam-dev/vibecheck-action@v1
+      - uses: kdowswell/vibecheck-action@v1
         with:
           github_token: ${{ secrets.COPILOT_TOKEN }}
 ```
@@ -119,7 +119,7 @@ no tests? bold strategy, let's see if it pays off 🎲
 ## Configuration
 
 ```yaml
-- uses: seam-dev/vibecheck-action@v1
+- uses: kdowswell/vibecheck-action@v1
   with:
     # Required: GitHub token with Copilot access
     github_token: ${{ secrets.COPILOT_TOKEN }}
@@ -160,7 +160,7 @@ Comment on any PR with `@vibecheck` followed by a question:
 For teams that prefer less personality:
 
 ```yaml
-- uses: seam-dev/vibecheck-action@v1
+- uses: kdowswell/vibecheck-action@v1
   with:
     github_token: ${{ secrets.COPILOT_TOKEN }}
     tone: "professional"

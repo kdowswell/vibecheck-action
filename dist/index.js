@@ -33374,7 +33374,7 @@ function formatComment(report) {
 ${report.content}
 
 ---
-<sub>\u{1F3AD} [Vibe Check](https://github.com/seam-dev/vibecheck-action) \u2022 Powered by GitHub Copilot</sub>`;
+<sub>\u{1F3AD} [Vibe Check](https://github.com/kdowswell/vibecheck-action) \u2022 Powered by GitHub Copilot</sub>`;
 }
 function parseVibeReport(content) {
   const summary = {

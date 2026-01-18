@@ -87,7 +87,7 @@ function formatComment(report: VibeReport): string {
 ${report.content}
 
 ---
-<sub>🎭 [Vibe Check](https://github.com/seam-dev/vibecheck-action) • Powered by GitHub Copilot</sub>`;
+<sub>🎭 [Vibe Check](https://github.com/kdowswell/vibecheck-action) • Powered by GitHub Copilot</sub>`;
 }
 
 export function parseVibeReport(content: string): VibeReport {
