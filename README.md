@@ -128,7 +128,7 @@ no tests? bold strategy, let's see if it pays off 🎲
     tone: "playful"
     
     # Optional: Which model to use
-    model: "gpt-5"
+    model: "GPT-5.2"
     
     # Optional: Which checks to run
     checks: "security,ai-detection,tests,complexity"
@@ -170,8 +170,8 @@ For teams that prefer less personality:
 
 Vibe Check supports any model available in GitHub Copilot:
 
-- `gpt-5` (default) - Best overall
-- `gpt-5.2-codex` - Optimized for code
+- `GPT-5.2` (default) - Best overall
+- `GPT-5.2-codex` - Optimized for code
 - `claude-sonnet-4.5` - Great for nuanced analysis
 - `gpt-5-mini` - Faster, included in subscription (no premium requests)
 

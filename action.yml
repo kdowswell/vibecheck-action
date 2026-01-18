@@ -18,9 +18,9 @@ inputs:
     default: 'playful'
 
   model:
-    description: 'Copilot model to use (gpt-5, claude-sonnet-4.5, gpt-5.2-codex)'
+    description: 'Copilot model to use (GPT-5.2, GPT-5.2-codex, claude-sonnet-4.5, gpt-5-mini)'
     required: false
-    default: 'gpt-5'
+    default: 'GPT-5.2'
 
   checks:
     description: 'Comma-separated checks to run (security,ai-detection,tests,complexity)'

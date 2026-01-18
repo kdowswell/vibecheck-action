@@ -8,7 +8,7 @@ export function getConfig(): Config {
   
   return {
     tone: (process.env.INPUT_TONE || 'playful') as 'playful' | 'professional',
-    model: process.env.INPUT_MODEL || 'gpt-5',
+    model: process.env.INPUT_MODEL || 'GPT-5.2',
     checks: checksStr.split(',').map(s => s.trim()),
     triggerPhrase: process.env.INPUT_TRIGGER_PHRASE || '@vibecheck',
     autoReview: process.env.INPUT_AUTO_REVIEW !== 'false',
