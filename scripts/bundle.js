@@ -4,17 +4,15 @@ const path = require('path');
 async function build() {
   try {
     await esbuild.build({
-      entryPoints: [path.join(__dirname, '../dist/index.js')],
+      entryPoints: [path.join(__dirname, '../src/index.ts')],
       bundle: true,
       platform: 'node',
       target: 'node20',
+      format: 'cjs',
       outfile: path.join(__dirname, '../dist/index.js'),
-      allowOverwrite: true,
       external: [
         // Don't bundle native modules
         'fsevents',
-        // ESM-only packages
-        '@github/copilot-sdk',
       ],
     });
     console.log('Build complete!');

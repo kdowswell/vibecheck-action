@@ -4,7 +4,7 @@
   "description": "PR review for vibe coders - powered by GitHub Copilot",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && node scripts/bundle.js",
+    "build": "node scripts/bundle.js",
     "typecheck": "tsc --noEmit",
     "dev": "tsc --watch"
   },
