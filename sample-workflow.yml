@@ -40,8 +40,8 @@ jobs:
       - name: Checkout action source
         uses: actions/checkout@v4
         with:
-          repository: YOUR_USERNAME/vibecheck-action  # Change this!
-          ref: main  # Or your branch
+          repository: kdowswell/vibecheck-action
+          ref: main
           path: .vibecheck-action
 
       - name: Setup Node.js
